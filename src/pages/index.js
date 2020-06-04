@@ -1,22 +1,45 @@
 import React from "react"
-import { Link } from "gatsby"
-
 import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import Img from "gatsby-image"
+import { useStaticQuery, graphql } from "gatsby"
+import styled from "styled-components"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
-)
+const Container = styled.div`
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`
+
+const IndexPage = () => {
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      file(relativePath: { eq: "gloom.png" }) {
+        childImageSharp {
+          fixed {
+            base64
+            src
+            srcSet
+            width
+            height
+          }
+        }
+      }
+    }
+  `)
+
+  console.log("data", data)
+  return (
+    <Layout>
+      <Container>
+        <Img fixed={data.file.childImageSharp.fixed} />
+        <div>
+          {" "}
+          Gloomhaven Assistant aims to assist players in the setup and flow of
+          combat in the boardgame Gloomhaven.
+        </div>
+      </Container>
+    </Layout>
+  )
+}
 
 export default IndexPage
