@@ -13,18 +13,21 @@ const Container = styled.div`
 const ImageContainer = styled.div`
   width: 100%;
 `
+const Store = styled.div`
+  width: 75%;
+`
+
+const StoresContainer = styled.div`
+  display: flex;
+`
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     query MyQuery {
-      file(relativePath: { eq: "gloom.png" }) {
+      hero: file(relativePath: { eq: "gloom.png" }) {
         childImageSharp {
           fluid {
-            base64
-            aspectRatio
-            sizes
-            src
-            srcSet
+            ...GatsbyImageSharpFluid
           }
         }
       }
@@ -33,58 +36,45 @@ const IndexPage = () => {
           title
         }
       }
+      google: file(relativePath: { eq: "googleplay.png" }) {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
+      apple: file(relativePath: { eq: "apple.png" }) {
+        childImageSharp {
+          fluid {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
     }
   `)
-
-  // const title = useStaticQuery(graphql`
-  //   query SiteTitleQuery {
-  //     site {
-  //       siteMetadata {
-  //         title
-  //       }
-  //     }
-  //   }
-  // `)
-
-  // const data = useStaticQuery(graphql`
-  // query MyQuery {
-  //   file(relativePath: { eq: "gloom.png" }) {
-  //     childImageSharp {
-  //       fluid {
-  //         base64
-  //         aspectRatio
-  //         sizes
-  //         src
-  //         srcSet
-  //       }
-  //     }
-  //   }
-
-  //   site {
-  //     siteMetadata {
-  //       title
-  //     }
-  //   }
-  // }
-  // `)
 
   console.log("data", data)
   return (
     <Layout>
       <Container>
+        <div>
+          <h1>Get to the fun faster</h1>
+          Gloomhaven Assistant aims to assist players in the setup and flow of
+          combat in the #1 trending boardgame in 2020, Gloomhaven.
+          <StoresContainer>
+            <Store>
+              {" "}
+              <Img fluid={data.google.childImageSharp.fluid} />
+            </Store>
+            <Store>
+              <Img fluid={data.apple.childImageSharp.fluid} />
+            </Store>
+          </StoresContainer>
+        </div>
         <ImageContainer>
           {" "}
-          <Img fluid={data.file.childImageSharp.fluid} />
+          <Img fluid={data.hero.childImageSharp.fluid} />
         </ImageContainer>
-        <div>
-          {" "}
-          <Header
-            siteTitle={data.site.siteMetadata.title}
-            siteDescription={data.site.siteMetadata.description}
-          />
-          Gloomhaven Assistant aims to assist players in the setup and flow of
-          combat in the boardgame Gloomhaven.
-        </div>
       </Container>
     </Layout>
   )

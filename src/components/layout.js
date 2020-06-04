@@ -33,6 +33,10 @@ const Layout = ({ children }) => {
           height: "100vh",
         }}
       >
+        <Header
+          siteTitle={data.site.siteMetadata.title}
+          siteDescription={data.site.siteMetadata.description}
+        />
         <main>{children}</main>
         <footer style={{ bottom: "0" }}>
           © {new Date().getFullYear()},{` `}
