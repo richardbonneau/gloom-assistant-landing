@@ -7,10 +7,19 @@
 
 import React from "react"
 import PropTypes from "prop-types"
+import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
+
+const Main = styled.main`
+  @media (min-width: 768px) {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+`
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -37,8 +46,8 @@ const Layout = ({ children }) => {
           siteTitle={data.site.siteMetadata.title}
           siteDescription={data.site.siteMetadata.description}
         />
-        <main>{children}</main>
-        <footer style={{ bottom: "0" }}>
+        <Main>{children}</Main>
+        <footer style={{ bottom: "0", position: "absolute" }}>
           © {new Date().getFullYear()},{` `}
           <a href="https://www.richardbonneau.com">Richard Bonneau</a>
         </footer>

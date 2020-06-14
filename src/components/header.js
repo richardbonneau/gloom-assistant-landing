@@ -32,11 +32,7 @@ const Header = ({ siteTitle }) => {
   `)
   console.log("data", data, data.file.childImageSharp.fixed)
   return (
-    <header
-      style={{
-        marginBottom: `1.45rem`,
-      }}
-    >
+    <header>
       <Container>
         <Img fixed={data.file.childImageSharp.fixed} />
         <h4>{siteTitle}</h4>
